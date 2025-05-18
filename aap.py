@@ -6,7 +6,9 @@ import os
 # Load environment variables
 load_dotenv()
 
-app = Flask(__name__)
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 # Environment variables se load ho raha hai
 GROQ_API_URL = os.getenv("GROQ_API_URL")
