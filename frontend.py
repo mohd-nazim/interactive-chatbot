@@ -8,10 +8,21 @@ user_input = st.text_input("Ask something about your documents:")
 
 if st.button("Send"):
     if user_input:
-        response = requests.post(f"{os.getenv('GROQ_API_URL')}/chat", json={"message": user_input})
+        st.write("Sending request to backend...")  # 👈 Debugging message
+        
+        # ✅ Check the API URL
+        api_url = os.getenv('GROQ_API_URL')
+        st.write("API URL being called:", api_url)
 
-        if response.status_code == 200:
-            data = response.json()
-            st.write("**Bot:**", data.get('answer', ''))
-        else:
-            st.write("Error communicating with backend.")
+        try:
+            response = requests.post(f"{api_url}/chat", json={"message": user_input})
+            st.write("Response Status Code:", response.status_code)  # 👈 Status code
+            st.write("Response Text:", response.text)               # 👈 Full response
+
+            if response.status_code == 200:
+                data = response.json()
+                st.write("**Bot:**", data.get('answer', ''))
+            else:
+                st.write("❌ **Error communicating with backend.**")
+        except Exception as e:
+            st.write("❌ **Exception Occurred:**", str(e))
