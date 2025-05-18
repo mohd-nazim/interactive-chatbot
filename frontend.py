@@ -10,8 +10,8 @@ if st.button("Send"):
     if user_input:
         st.write("Sending request to backend...")  # 👈 Debugging message
         
-        # ✅ Check the API URL
-        api_url = os.getenv('GROQ_API_URL')
+        # ✅ Set the API URL for deployment
+        api_url = os.getenv('BACKEND_URL', 'http://127.0.0.1:5000')
         st.write("API URL being called:", api_url)
 
         try:
